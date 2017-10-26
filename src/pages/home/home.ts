@@ -37,7 +37,7 @@ export class HomePage {
       this.audiosShow = res.json();
 
 
-      if (this.platform.is('android')) {
+      if (this.platform.is('android') || this.platform.is('ios')) {
 
         this.nativeStorage.getItem('favoritos')
           .then((favs) => {
