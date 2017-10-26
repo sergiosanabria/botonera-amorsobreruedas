@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "nombre": "Muchas gracias señor policia",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/muchas_gracias_donpolicia.mp3"
+    },
+    {
+        "id": 2,
+        "nombre": "Vamo' a toma' una birra al parque",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/una_birra_parque.mp3"
+    },
+    {
+        "id": 3,
+        "nombre": "Que yegua!!!",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/que_yegua.mp3"
+    },
+    {
+        "id": 4,
+        "nombre": "Una moneda",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/una_moneda.mp3"
+    }
+]

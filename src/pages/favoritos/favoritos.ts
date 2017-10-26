@@ -1,0 +1,92 @@
+import { MsgProvider } from './../../providers/msg/msg';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { Api } from './../../providers/api/api';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+
+/**
+ * Generated class for the FavoritosPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-favoritos',
+  templateUrl: 'favoritos.html',
+})
+export class FavoritosPage {
+
+  favoritos: any;
+  audio: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,  private msg: MsgProvider,
+    private socialSharing: SocialSharing, private api: Api, private platform: Platform, private nativeStorage: NativeStorage) {
+  }
+
+  ionViewDidLoad() {
+    setTimeout(() => {
+      this.cargarAudios();
+    }, 500);
+  }
+
+  cargarAudios() {
+    if (this.platform.is('android')) {
+
+      this.nativeStorage.getItem('favoritos')
+        .then((favs) => {
+          this.favoritos = favs;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    }
+  }
+
+  play(a) {
+    this.audio = new Audio(a.url);
+
+    this.audio.play();
+
+    this.audio.addEventListener("ended", () => {
+      a.played = false;
+
+    });
+
+    a.played = true;
+  }
+
+  pause(a) {
+
+    this.audio.pause();
+
+    a.played = false;
+  }
+
+  share(a) {
+    this.socialSharing.share(a.nombre, 'Botonera de Amor sobre ruedas', a.url);
+
+  }
+
+  quitarFavorito(a) {
+    this.popItem(a, this.favoritos);
+    this.msg.presentToast('Quitado de favoritos');
+    this.nativeStorage.setItem('favoritos', this.favoritos).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  popItem(item, array) {
+    for (let k in array) {
+      if (item.id == array[k].id) {
+        array.splice(k, 1);
+      }
+    }
+
+    return array;
+  }
+
+}
