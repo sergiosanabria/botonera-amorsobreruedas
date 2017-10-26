@@ -33,7 +33,7 @@ export class FavoritosPage {
   }
 
   cargarAudios() {
-    if (this.platform.is('android')) {
+    if (this.platform.is('android') || this.platform.is('ios')) {
 
       this.nativeStorage.getItem('favoritos')
         .then((favs) => {
