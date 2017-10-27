@@ -18,6 +18,7 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Api } from '../providers/api/api';
+import { PlayerProvider } from '../providers/player/player';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { Api } from '../providers/api/api';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api,
-    MsgProvider
+    MsgProvider,
+    PlayerProvider
   ]
 })
 export class AppModule { }

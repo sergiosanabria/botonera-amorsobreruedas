@@ -1,3 +1,4 @@
+import { PlayerProvider } from './../../providers/player/player';
 import { MsgProvider } from './../../providers/msg/msg';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { NativeStorage } from '@ionic-native/native-storage';
@@ -22,7 +23,7 @@ export class FavoritosPage {
   favoritos: any;
   audio: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,  private msg: MsgProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private msg: MsgProvider, private player: PlayerProvider,
     private socialSharing: SocialSharing, private api: Api, private platform: Platform, private nativeStorage: NativeStorage) {
   }
 
@@ -47,23 +48,15 @@ export class FavoritosPage {
   }
 
   play(a) {
-    this.audio = new Audio(a.url);
 
-    this.audio.play();
+    this.player.play(a, this.audio);
 
-    this.audio.addEventListener("ended", () => {
-      a.played = false;
-
-    });
-
-    a.played = true;
+    this.audio = a;
   }
 
   pause(a) {
-
-    this.audio.pause();
-
-    a.played = false;
+    
+    this.player.pause(a);
   }
 
   share(a) {

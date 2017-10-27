@@ -1,3 +1,4 @@
+import { PlayerProvider } from './../../providers/player/player';
 import { MsgProvider } from './../../providers/msg/msg';
 import { Api } from './../../providers/api/api';
 import { Component } from '@angular/core';
@@ -20,7 +21,7 @@ export class HomePage {
 
   favoritos = [];
 
-  constructor(public navCtrl: NavController, private api: Api, private platform: Platform,
+  constructor(public navCtrl: NavController, private api: Api, private platform: Platform, private player: PlayerProvider,
     private socialSharing: SocialSharing, private nativeStorage: NativeStorage, private msg: MsgProvider) {
 
   }
@@ -64,23 +65,16 @@ export class HomePage {
   }
 
   play(a) {
-    this.audio = new Audio(a.url);
 
-    this.audio.play();
+    this.player.play(a, this.audio);
 
-    this.audio.addEventListener("ended", () => {
-      a.played = false;
+    this.audio = a;
 
-    });
-
-    a.played = true;
   }
 
   pause(a) {
 
-    this.audio.pause();
-
-    a.played = false;
+    this.player.pause(a);
   }
 
   async download(a) {

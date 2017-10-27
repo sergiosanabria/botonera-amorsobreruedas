@@ -32,15 +32,16 @@
   </ion-toolbar>
   <ion-toolbar *ngIf="enabledSearch" color="primary">
     <ion-searchbar debounce="800" animated="true" showCancelButton="true" placeholder="Buscá una frase de Rolando y la banda"
-      [(ngModel)]="searchText" (input)="buscarAudios($event)" (ionCancel)="hideSearch($event)"></ion-searchbar>
+      [(ngModel)]="searchText" (input)="buscarAudios($event)" cancelButtonText="Cancelar" (ionCancel)="hideSearch($event)">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-refresher (ionRefresh)="cargarAudios($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-    
+  <ion-refresher (ionRefresh)="cargarAudios($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <ion-item *ngFor="let a of audiosShow">
       {{a.nombre}}

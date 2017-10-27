@@ -18,5 +18,80 @@
         "id": 4,
         "nombre": "Una moneda",
         "url": "http://sergiosanabria.pe.hu/botonera/audios/una_moneda.mp3"
+    },
+    {
+        "id": 5,
+        "nombre": "Y eñaaaa",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/y_enia.mp3"
+    },
+    {
+        "id": 6,
+        "nombre": "A donde te llevo y te arrimo",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/te_llevo_y_te_arrimo.mp3"
+    },
+    {
+        "id": 7,
+        "nombre": "Yo soy el protagonista y el guacho pistola",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/protagonista_guachopistola.mp3"
+    },
+    {
+        "id": 8,
+        "nombre": "Que calor hace, tenes novio?",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/que_calor_hace_tenes_novia.mp3"
+    },
+    {
+        "id": 9,
+        "nombre": "Ah tenes amigas vos tambien",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/tenes_amiga_vos_tambien.mp3"
+    },
+    {
+        "id": 10,
+        "nombre": "Esa Rolando, esaaaa!!!",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/esa_rolando_esa.mp3"
+    },
+    {
+        "id": 11,
+        "nombre": "Intente con todas mis tecnicas y  no me dio bola",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/intente_con_todas_mis_tecnicas.mp3"
+    },
+    {
+        "id": 12,
+        "nombre": "A vos te hago como tre' al aeropuerto",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/como_3_al_aeropuerto.mp3"
+    },
+    {
+        "id": 13,
+        "nombre": "Me dicen Silvia, por la Suller",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/me_dicen_silvia.mp3"
+    },
+    {
+        "id": 14,
+        "nombre": "Con un Diego quedamos bien",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/conundiego_quedamoderecho.mp3"
+    },
+    {
+        "id": 15,
+        "nombre": "No se como me vas a pagar lo que falta",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/nosecomomevaapaga_loquefalta.mp3"
+    },
+    {
+        "id": 16,
+        "nombre": "Vos le sos fiel a tu novio?",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/volesosfiel_avecessi.mp3"
+    },
+    {
+        "id": 17,
+        "nombre": "Ay roli!",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/ayroli.mp3"
+    },
+    {
+        "id": 18,
+        "nombre": "Anga, anga 1",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/anga1.mp3"
+    },
+    {
+        "id": 19,
+        "nombre": "Suy un remisero, cancion completa",
+        "url": "http://sergiosanabria.pe.hu/botonera/audios/soyunremisero_completo.mp3"
     }
 ]
