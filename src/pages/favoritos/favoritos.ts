@@ -67,7 +67,14 @@ export class FavoritosPage {
   }
 
   share(a) {
-    this.socialSharing.share(a.nombre, 'Botonera de Amor sobre ruedas', a.url);
+    this.msg.presentLoading('Compartiendo Roly');
+    this.socialSharing.share(a.nombre, 'Botonera de Amor sobre ruedas', a.url).then(() => {
+      // Success!
+      this.msg.dismissLoading();
+    }).catch(() => {
+      // Error!
+      this.msg.dismissLoading();
+    });
 
   }
 

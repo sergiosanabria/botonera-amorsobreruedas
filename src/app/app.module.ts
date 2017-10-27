@@ -1,3 +1,4 @@
+import { AcercaDePageModule } from './../pages/acerca-de/acerca-de.module';
 import { MsgProvider } from './../providers/msg/msg';
 import { FavoritosPageModule } from './../pages/favoritos/favoritos.module';
 import { NativeStorage } from '@ionic-native/native-storage';
@@ -28,6 +29,7 @@ import { Api } from '../providers/api/api';
     BrowserModule,
     HttpModule,
     FavoritosPageModule,
+    AcercaDePageModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],

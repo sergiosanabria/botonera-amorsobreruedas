@@ -31,7 +31,8 @@ export class HomePage {
     }, 500);
   }
 
-  cargarAudios() {
+  cargarAudios(refresher?) {
+    this.msg.presentLoading('Cargando los audios de Roly');
     this.api.get("audios.json").subscribe((res) => {
       this.audios = res.json();
       this.audiosShow = res.json();
@@ -44,9 +45,17 @@ export class HomePage {
 
             this.favoritos = favs;
             this.checkFavoritos();
+            this.msg.dismissLoading();
+            if (refresher) {
+              refresher.complete();
+            }
           })
           .catch((err) => {
             console.log(err);
+            this.msg.dismissLoading();
+            if (refresher) {
+              refresher.complete();
+            }
           });
 
       }
@@ -79,7 +88,14 @@ export class HomePage {
   }
 
   share(a) {
-    this.socialSharing.share(a.nombre, 'Botonera de Amor sobre ruedas', a.url);
+    this.msg.presentLoading('Compartiendo Rolando');
+    this.socialSharing.share(a.nombre, 'Botonera de Amor sobre ruedas', a.url).then(() => {
+      // Success!
+      this.msg.dismissLoading();
+    }).catch(() => {
+      // Error!
+      this.msg.dismissLoading();
+    });
 
   }
 

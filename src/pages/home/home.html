@@ -35,7 +35,12 @@
       [(ngModel)]="searchText" (input)="buscarAudios($event)" (ionCancel)="hideSearch($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+
+<ion-content padding>
+    <ion-refresher (ionRefresh)="cargarAudios($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    
   <ion-list>
     <ion-item *ngFor="let a of audiosShow">
       {{a.nombre}}

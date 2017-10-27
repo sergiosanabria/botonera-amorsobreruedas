@@ -1,3 +1,4 @@
+import { AcercaDePage } from './../pages/acerca-de/acerca-de';
 import { FavoritosPage } from './../pages/favoritos/favoritos';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
@@ -23,7 +24,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Favoritos', component: FavoritosPage }
+      { title: 'Favoritos', component: FavoritosPage },
+      { title: 'Acerca de', component: AcercaDePage },
     ];
 
   }
