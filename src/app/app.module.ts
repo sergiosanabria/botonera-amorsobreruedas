@@ -1,3 +1,4 @@
+import { Device } from '@ionic-native/device';
 import { AcercaDePageModule } from './../pages/acerca-de/acerca-de.module';
 import { MsgProvider } from './../providers/msg/msg';
 import { FavoritosPageModule } from './../pages/favoritos/favoritos.module';
@@ -49,7 +50,8 @@ import { PlayerProvider } from '../providers/player/player';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Api,
     MsgProvider,
-    PlayerProvider
+    PlayerProvider,
+    Device
   ]
 })
 export class AppModule { }

@@ -34,7 +34,7 @@ export class HomePage {
 
   cargarAudios(refresher?) {
     this.msg.presentLoading('Cargando los audios de Roly');
-    this.api.get("audios.json").subscribe((res) => {
+    this.api.get("audios").subscribe((res) => {
       this.audios = res.json();
       this.audiosShow = res.json();
 
@@ -66,10 +66,12 @@ export class HomePage {
 
   play(a) {
 
-    this.player.play(a, this.audio);
-
-    this.audio = a;
-
+    if (a.played) {
+      this.pause(a);
+    } else {
+      this.player.play(a, this.audio);
+      this.audio = a;
+    }
   }
 
   pause(a) {
@@ -86,6 +88,13 @@ export class HomePage {
     this.socialSharing.share(a.nombre, 'Botonera de Amor sobre ruedas', a.url).then(() => {
       // Success!
       this.msg.dismissLoading();
+
+      this.api.estadisticas(a.links._shared).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err);
+      });
+
     }).catch(() => {
       // Error!
       this.msg.dismissLoading();
@@ -98,8 +107,22 @@ export class HomePage {
       this.popItem(a, this.favoritos);
       a.favorito = false;
       this.msg.presentToast('Quitado de favoritos');
+
+      this.api.estadisticas(a.links._unfav).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err);
+      });
+
+
     } else {
       this.favoritos.push(Object.assign({}, a));
+
+      this.api.estadisticas(a.links._fav).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err);
+      });
 
       a.favorito = true;
 

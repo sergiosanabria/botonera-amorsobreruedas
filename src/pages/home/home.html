@@ -1,11 +1,3 @@
-<!-- <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header> -->
 <ion-header>
   <ion-toolbar color="amarillo" *ngIf="!enabledSearch">
     <!-- <ion-buttons start>
@@ -43,10 +35,11 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-item *ngFor="let a of audiosShow">
-      {{a.nombre}}
-      <ion-icon *ngIf="!a.played" (click)="play(a)" name="play" item-end></ion-icon>
-      <ion-icon *ngIf="a.played" (click)="pause(a)" name="square" item-end></ion-icon>
+    <ion-item no-padding *ngFor="let a of audiosShow">
+      <!-- <ion-icon *ngIf="!a.played" (click)="play(a)" name="play" item-start></ion-icon> -->
+      <ion-icon *ngIf="a.played" (click)="pause(a)" name="square" item-start></ion-icon>
+      <p (click)="play(a)">{{a.nombre}}</p>
+
       <ion-icon *ngIf="a.favorito" (click)="agregarQuitarFavorito(a)" color='amarillo' name="heart" item-end></ion-icon>
       <ion-icon *ngIf="!a.favorito" (click)="agregarQuitarFavorito(a)" color='amarillo' name="heart-outline" item-end></ion-icon>
       <!-- <ion-icon  name="download" (click)="download(a)" item-end></ion-icon> -->

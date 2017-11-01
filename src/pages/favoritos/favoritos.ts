@@ -49,13 +49,16 @@ export class FavoritosPage {
 
   play(a) {
 
-    this.player.play(a, this.audio);
-
-    this.audio = a;
+    if (a.played) {
+      this.pause(a);
+    } else {
+      this.player.play(a, this.audio);
+      this.audio = a;
+    }
   }
 
   pause(a) {
-    
+
     this.player.pause(a);
   }
 
@@ -64,6 +67,13 @@ export class FavoritosPage {
     this.socialSharing.share(a.nombre, 'Botonera de Amor sobre ruedas', a.url).then(() => {
       // Success!
       this.msg.dismissLoading();
+
+      this.api.estadisticas(a.links._shared).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err);
+      });
+
     }).catch(() => {
       // Error!
       this.msg.dismissLoading();
@@ -74,6 +84,12 @@ export class FavoritosPage {
   quitarFavorito(a) {
     this.popItem(a, this.favoritos);
     this.msg.presentToast('Quitado de favoritos');
+
+    this.api.estadisticas(a.links._unfav).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err);
+    });
     this.nativeStorage.setItem('favoritos', this.favoritos).catch((err) => {
       console.log(err);
     });

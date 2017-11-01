@@ -9,10 +9,9 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let a of favoritos">
-      {{a.nombre}}
-      <ion-icon *ngIf="!a.played" (click)="play(a)" name="play" item-end></ion-icon>
-      <ion-icon *ngIf="a.played" (click)="pause(a)" name="square" item-end></ion-icon>
-      <ion-icon  (click)="quitarFavorito(a)" color='danger' name="trash" item-end></ion-icon>
+      <ion-icon *ngIf="a.played" (click)="pause(a)" name="square" item-start></ion-icon>
+      <p (click)="play(a)">{{a.nombre}}</p>
+      <ion-icon (click)="quitarFavorito(a)" color='danger' name="trash" item-end></ion-icon>
       <ion-icon (click)="share(a)" name="share" item-end></ion-icon>
     </ion-item>
   </ion-list>

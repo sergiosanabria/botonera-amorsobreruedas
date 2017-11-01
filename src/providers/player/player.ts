@@ -1,3 +1,4 @@
+import { Api } from './../api/api';
 import { MsgProvider } from './../msg/msg';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
@@ -14,14 +15,14 @@ export class PlayerProvider {
 
   audio: any;
 
-  constructor(public http: Http, private msg: MsgProvider) {
+  constructor(public http: Http, private msg: MsgProvider, private api: Api) {
     console.log('Hello PlayerProvider Provider');
   }
 
   play(a, prev?) {
     this.msg.presentLoading('Cargando audio');
 
-    if (this.audio && prev){
+    if (this.audio && prev) {
       this.pause(prev);
     }
 
@@ -47,6 +48,11 @@ export class PlayerProvider {
 
     this.audio.addEventListener("playing", () => {
       a.played = true;
+      this.api.estadisticas(a.links._play).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err);
+      });
       this.msg.dismissLoading();
     });
 

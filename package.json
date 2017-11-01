@@ -21,6 +21,7 @@
     "@angular/platform-browser": "4.4.3",
     "@angular/platform-browser-dynamic": "4.4.3",
     "@ionic-native/core": "4.3.2",
+    "@ionic-native/device": "^4.3.3",
     "@ionic-native/file": "^4.3.2",
     "@ionic-native/file-transfer": "^4.3.2",
     "@ionic-native/native-storage": "^4.3.2",

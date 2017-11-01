@@ -1,3 +1,5 @@
+import { Platform } from 'ionic-angular';
+import { Device } from '@ionic-native/device';
 import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
@@ -11,16 +13,17 @@ import { File } from '@ionic-native/file';
  */
 @Injectable()
 export class Api {
-  url: string = 'http://sergiosanabria.pe.hu/botonera';
+  url: string = 'http://138.219.42.157:8080/api/e4132f28-bb2b-4fc7-9da8-0cca9de8bfa3';
 
-  constructor(public http: Http, private transfer: FileTransfer, private file: File) {
+  constructor(public http: Http, private transfer: FileTransfer, private file: File,
+    private device: Device, private platform: Platform) {
   }
 
   get(endpoint: string, params?: any, options?: RequestOptions) {
     if (!options) {
       options = new RequestOptions();
     }
-    
+
 
     // Support easy query params for GET requests
     if (params) {
@@ -50,6 +53,30 @@ export class Api {
 
   patch(endpoint: string, body: any, options?: RequestOptions) {
     return this.http.put(this.url + '/' + endpoint, body, options);
+  }
+
+  estadisticas(url) {
+
+    return new Promise((reseolve, reject) => {
+      console.log(typeof this.device.uuid);
+      if ((this.platform.is('android') || this.platform.is('ios')) && this.device.uuid) {
+
+        url += "/" + this.device.uuid;
+
+
+        this.http.get(url).subscribe((res) => {
+          reseolve(res.json());
+        }, (err) => {
+          reject(err)
+        });
+
+
+      } else {
+        reject(new Error('No es el dispositivo correcto o no tiene uuid'));
+      }
+
+
+    });
   }
 
   download(url, name, extension) {
@@ -85,7 +112,7 @@ export class Api {
 
     return this.file.getFile(rootDir, name + '.' + extension, { create: false });
 
-    
+
 
   }
 }
