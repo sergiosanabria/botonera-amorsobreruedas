@@ -38,7 +38,7 @@
     <ion-item no-padding *ngFor="let a of audiosShow">
       <!-- <ion-icon *ngIf="!a.played" (click)="play(a)" name="play" item-start></ion-icon> -->
       <ion-icon *ngIf="a.played" (click)="pause(a)" name="square" item-start></ion-icon>
-      <p (click)="play(a)">{{a.nombre}}</p>
+      <span (click)="play(a)">{{a.nombre}}</span>
 
       <ion-icon *ngIf="a.favorito" (click)="agregarQuitarFavorito(a)" color='amarillo' name="heart" item-end></ion-icon>
       <ion-icon *ngIf="!a.favorito" (click)="agregarQuitarFavorito(a)" color='amarillo' name="heart-outline" item-end></ion-icon>
