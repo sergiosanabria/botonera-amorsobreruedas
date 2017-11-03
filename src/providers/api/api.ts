@@ -63,7 +63,6 @@ export class Api {
 
         url += "/" + this.device.uuid;
 
-
         this.http.get(url).subscribe((res) => {
           reseolve(res.json());
         }, (err) => {
@@ -74,7 +73,6 @@ export class Api {
       } else {
         reject(new Error('No es el dispositivo correcto o no tiene uuid'));
       }
-
 
     });
   }

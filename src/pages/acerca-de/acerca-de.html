@@ -9,9 +9,25 @@
 
 
 <ion-content padding>
-  <p>
-    Hecho con
-    <ion-icon ios="ios-heart" md="md-heart" color="danger"></ion-icon> en Posadas - Misiones
-  </p>
-  <p>Version 1.0.0</p>
+  <ion-title text-center style="margin-bottom:30px;">Diseño y Desarrollo</ion-title>
+  <ion-list no-lines>
+    <ion-item *ngFor="let c of contributors">
+      <ion-avatar item-start>
+        <img [src]="c.urlImg">
+      </ion-avatar>
+      <h2>{{c.name}}</h2>
+      <p>{{ c.position }}</p>
+      <ion-icon (click)="openUrl(c.twitter)" color="primary" name="logo-twitter" item-end></ion-icon>
+      <ion-icon (click)="openUrl( 'mailto:'+c.mail)" color="danger" name="mail" item-end></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <div style="margin-top:30px;" text-center>
+    <p>
+      Hecho con
+      <ion-icon ios="ios-heart" md="md-heart" color="danger"></ion-icon> en Posadas - Misiones
+    </p>
+    <p>Version 1.0.0</p>
+  </div>
+
 </ion-content>
