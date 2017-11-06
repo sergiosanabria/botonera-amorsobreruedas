@@ -36,6 +36,7 @@ export class HomePage {
   cargarAudios(refresher?) {
     this.msg.presentLoading('Cargando los audios de Roly');
     this.api.get("audios").subscribe((res) => {
+      this.errorInternet = false;
       this.audios = res.json();
       this.audiosShow = res.json();
 
