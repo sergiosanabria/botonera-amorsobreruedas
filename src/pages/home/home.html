@@ -34,7 +34,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list>
+  <ion-list *ngIf="!errorInternet">
     <ion-item no-padding *ngFor="let a of audiosShow">
       <!-- <ion-icon *ngIf="!a.played" (click)="play(a)" name="play" item-start></ion-icon> -->
       <ion-icon *ngIf="a.played" (click)="pause(a)" name="square" item-start></ion-icon>
@@ -46,4 +46,10 @@
       <ion-icon (click)="share(a)" name="share" item-end></ion-icon>
     </ion-item>
   </ion-list>
+
+  <div  *ngIf="errorInternet" text-center margin>
+    <h1>  <ion-icon name="alert"></ion-icon> <br>No hay conexíon a internet</h1> 
+
+    <h4>Tire hacia abajo para actualizar</h4>
+  </div>
 </ion-content>

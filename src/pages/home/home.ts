@@ -18,6 +18,7 @@ export class HomePage {
   audio: any;
   searchText = "";
   enabledSearch = false;
+  errorInternet = false;
 
   favoritos = [];
 
@@ -61,6 +62,15 @@ export class HomePage {
 
       }
 
+    }, (err) => {
+
+      console.log(err);
+
+      this.errorInternet = true;
+      this.msg.dismissLoading();
+      if (refresher) {
+        refresher.complete();
+      }
     });
   }
 
