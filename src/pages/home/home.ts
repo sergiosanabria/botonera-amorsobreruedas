@@ -20,7 +20,7 @@ export class HomePage {
   enabledSearch = false;
   errorInternet = false;
 
-  @ViewChild('searchbar') searchbar:any;
+  @ViewChild('searchbar') searchbar: any;
 
   favoritos = [];
 
@@ -32,7 +32,26 @@ export class HomePage {
   ionViewDidLoad() {
     setTimeout(() => {
       this.cargarAudios();
-    }, 500);
+    }, 150);
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      if (this.platform.is('android') || this.platform.is('ios')) {
+
+        this.nativeStorage.getItem('favoritos')
+          .then((favs) => {
+
+            this.favoritos = favs;
+            this.checkFavoritos();
+
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+      }
+    }, 350);
   }
 
   cargarAudios(refresher?) {
@@ -40,8 +59,10 @@ export class HomePage {
     this.api.get("audios").subscribe((res) => {
       this.errorInternet = false;
       this.audios = res.json();
-      this.audiosShow = res.json();
 
+      this.nativeStorage.setItem('audios', this.audios);
+
+      this.audiosShow = res.json();
 
       if (this.platform.is('android') || this.platform.is('ios')) {
 
@@ -66,14 +87,40 @@ export class HomePage {
       }
 
     }, (err) => {
-
       console.log(err);
 
       this.errorInternet = true;
-      this.msg.dismissLoading();
-      if (refresher) {
-        refresher.complete();
+
+      if (this.platform.is('android') || this.platform.is('ios')) {
+        this.nativeStorage.getItem('audios').then((audios) => {
+          if (audios) {
+            this.audios = audios;
+
+            this.audiosShow = [].concat(audios);
+
+            this.nativeStorage.getItem('favoritos')
+              .then((favs) => {
+
+                this.favoritos = favs;
+                this.checkFavoritos();
+                this.msg.dismissLoading();
+                if (refresher) {
+                  refresher.complete();
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                this.msg.dismissLoading();
+                if (refresher) {
+                  refresher.complete();
+                }
+              });
+
+          }
+        });
+
       }
+
     });
   }
 
@@ -127,9 +174,12 @@ export class HomePage {
         console.log(err);
       });
 
-
     } else {
-      this.favoritos.push(Object.assign({}, a));
+      let obj = Object.assign({}, a);
+
+      obj.played = false;
+
+      this.favoritos.push(obj);
 
       this.api.estadisticas(a.links._fav).then((res) => {
         console.log(res)
@@ -145,7 +195,6 @@ export class HomePage {
       console.log(err);
     });
   }
-
 
   buscarAudios() {
 
@@ -187,6 +236,8 @@ export class HomePage {
       for (let a of this.audiosShow) {
         if (this.idInArray(a.id, this.favoritos)) {
           a.favorito = true;
+        } else {
+          a.favorito = false;
         }
       }
     } else {
