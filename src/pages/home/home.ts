@@ -1,7 +1,7 @@
 import { PlayerProvider } from './../../providers/player/player';
 import { MsgProvider } from './../../providers/msg/msg';
 import { Api } from './../../providers/api/api';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { NativeStorage } from '@ionic-native/native-storage';
@@ -19,6 +19,8 @@ export class HomePage {
   searchText = "";
   enabledSearch = false;
   errorInternet = false;
+
+  @ViewChild('searchbar') searchbar:any;
 
   favoritos = [];
 
@@ -165,8 +167,11 @@ export class HomePage {
     this.checkFavoritos();
   }
 
-  showSearch() {
+  showSearch(): void {
     this.enabledSearch = true;
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    }, 150);
   }
 
   hideSearch() {

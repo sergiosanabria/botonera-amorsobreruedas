@@ -23,7 +23,7 @@
 
   </ion-toolbar>
   <ion-toolbar *ngIf="enabledSearch" color="amarillo">
-    <ion-searchbar debounce="800" animated="true" showCancelButton="true" placeholder="Buscá una frase de Rolando y la banda"
+    <ion-searchbar #searchbar debounce="800" animated="true" showCancelButton="true" placeholder="Buscá una frase de Rolando y la banda"
       [(ngModel)]="searchText" (input)="buscarAudios($event)" cancelButtonText="Cancelar" (ionCancel)="hideSearch($event)">
     </ion-searchbar>
   </ion-toolbar>
@@ -35,13 +35,13 @@
   </ion-refresher>
 
   <ion-list *ngIf="!errorInternet">
-    <ion-item no-padding *ngFor="let a of audiosShow">
+    <ion-item no-padding *ngFor="let a of audiosShow" (click)="play(a)" tappable>
       <!-- <ion-icon *ngIf="!a.played" (click)="play(a)" name="play" item-start></ion-icon> -->
-      <ion-icon *ngIf="a.played" (click)="pause(a)" name="square" item-start></ion-icon>
-      <span (click)="play(a)">{{a.nombre}}</span>
+      <ion-icon *ngIf="a.played" (click)="$event.stopPropagation(); pause(a)" name="square" item-start></ion-icon>
+      <span>{{a.nombre}}</span>
 
-      <ion-icon *ngIf="a.favorito" (click)="agregarQuitarFavorito(a)" color='amarillo' name="heart" item-end></ion-icon>
-      <ion-icon *ngIf="!a.favorito" (click)="agregarQuitarFavorito(a)" color='amarillo' name="heart-outline" item-end></ion-icon>
+      <ion-icon *ngIf="a.favorito" (click)="$event.stopPropagation();agregarQuitarFavorito(a)" color='amarillo' name="heart" item-end></ion-icon>
+      <ion-icon *ngIf="!a.favorito" (click)="$event.stopPropagation();agregarQuitarFavorito(a)" color='amarillo' name="heart-outline" item-end></ion-icon>
       <!-- <ion-icon  name="download" (click)="download(a)" item-end></ion-icon> -->
       <ion-icon (click)="share(a)" name="share" item-end></ion-icon>
     </ion-item>
