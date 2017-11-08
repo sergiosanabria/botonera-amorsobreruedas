@@ -100,6 +100,8 @@ export class HomePage {
 
       this.audiosShow = res.json();
 
+      this.checkNotificaciones();
+
       if (this.platform.is('android') || this.platform.is('ios')) {
 
         this.nativeStorage.getItem('favoritos')
@@ -108,7 +110,7 @@ export class HomePage {
             this.favoritos = favs;
             this.checkFavoritos();
             this.msg.dismissLoading();
-            this.checkNotificaciones();
+            
             if (refresher) {
               refresher.complete();
             }
