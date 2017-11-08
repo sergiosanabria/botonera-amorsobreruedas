@@ -1,3 +1,4 @@
+import { Device } from '@ionic-native/device';
 import { PlayerProvider } from './../../providers/player/player';
 import { MsgProvider } from './../../providers/msg/msg';
 import { Api } from './../../providers/api/api';
@@ -25,13 +26,14 @@ export class HomePage {
   favoritos = [];
 
   constructor(public navCtrl: NavController, private api: Api, private platform: Platform, private player: PlayerProvider,
-    private socialSharing: SocialSharing, private nativeStorage: NativeStorage, private msg: MsgProvider) {
+    private socialSharing: SocialSharing, private nativeStorage: NativeStorage, private msg: MsgProvider, private device: Device) {
 
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
       this.cargarAudios();
+
     }, 150);
   }
 
@@ -54,6 +56,40 @@ export class HomePage {
     }, 350);
   }
 
+  checkNotificaciones() {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      this.api.get('notifications/' + this.device.uuid).subscribe((res) => {
+        let msgs = res.json();
+        
+        // Para poder probar nomas
+        // msgs = [
+        //   {
+        //     id: 1,
+        //     created_at: "2017-11-08T16:42:48+00:00",
+        //     titulo: "Ayyy Roooliii!!!",
+        //     // subtitulo: "subtitulo",
+        //     texto: "Subimos nuevos audios de Rolando y todos los personajes de Amor sobre ruedes"
+        //   }
+        // ];
+
+        for (let msg of msgs) {
+          let alert = this.msg.alertCtrl.create({
+            title: msg.titulo,
+            subTitle: msg.subtitulo,
+            message: msg.texto,
+            buttons: ['Listo listo, mató mató']
+          });
+          alert.present();
+        }
+
+
+      }, (err) => {
+        console.log(err);
+      })
+    }
+
+  }
+
   cargarAudios(refresher?) {
     this.msg.presentLoading('Cargando los audios de Roly');
     this.api.get("audios").subscribe((res) => {
@@ -72,6 +108,7 @@ export class HomePage {
             this.favoritos = favs;
             this.checkFavoritos();
             this.msg.dismissLoading();
+            this.checkNotificaciones();
             if (refresher) {
               refresher.complete();
             }
