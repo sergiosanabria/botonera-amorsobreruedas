@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
 /**
  * Generated class for the AcercaDePage page.
@@ -46,7 +46,7 @@ export class AcercaDePage {
     }
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform) {
   }
 
   ionViewDidLoad() {
@@ -54,7 +54,13 @@ export class AcercaDePage {
   }
 
   openUrl(url) {
-    window.open(url, "_system")
+    if (this.platform.is('ios')) {
+      window.open(url, "_self");
+    }
+
+    if (this.platform.is('android')) {
+      window.open(url, "_system");
+    }
   }
 
 }
