@@ -1,3 +1,4 @@
+import { Device } from '@ionic-native/device';
 import { PlayerProvider } from './../../providers/player/player';
 import { MsgProvider } from './../../providers/msg/msg';
 import { Api } from './../../providers/api/api';
@@ -20,19 +21,73 @@ export class HomePage {
   enabledSearch = false;
   errorInternet = false;
 
-  @ViewChild('searchbar') searchbar:any;
+  @ViewChild('searchbar') searchbar: any;
 
   favoritos = [];
 
   constructor(public navCtrl: NavController, private api: Api, private platform: Platform, private player: PlayerProvider,
-    private socialSharing: SocialSharing, private nativeStorage: NativeStorage, private msg: MsgProvider) {
+    private socialSharing: SocialSharing, private nativeStorage: NativeStorage, private msg: MsgProvider, private device: Device) {
 
   }
 
   ionViewDidLoad() {
     setTimeout(() => {
       this.cargarAudios();
-    }, 500);
+
+    }, 150);
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      if (this.platform.is('android') || this.platform.is('ios')) {
+
+        this.nativeStorage.getItem('favoritos')
+          .then((favs) => {
+
+            this.favoritos = favs;
+            this.checkFavoritos();
+
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+      }
+    }, 350);
+  }
+
+  checkNotificaciones() {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      this.api.get('notifications/' + this.device.uuid).subscribe((res) => {
+        let msgs = res.json();
+        
+        // Para poder probar nomas
+        // msgs = [
+        //   {
+        //     id: 1,
+        //     created_at: "2017-11-08T16:42:48+00:00",
+        //     titulo: "Ayyy Roooliii!!!",
+        //     // subtitulo: "subtitulo",
+        //     texto: "Subimos nuevos audios de Rolando y todos los personajes de Amor sobre ruedes"
+        //   }
+        // ];
+
+        for (let msg of msgs) {
+          let alert = this.msg.alertCtrl.create({
+            title: msg.titulo,
+            subTitle: msg.subtitulo,
+            message: msg.texto,
+            buttons: ['Listo listo, mató mató']
+          });
+          alert.present();
+        }
+
+
+      }, (err) => {
+        console.log(err);
+      })
+    }
+
   }
 
   cargarAudios(refresher?) {
@@ -40,8 +95,12 @@ export class HomePage {
     this.api.get("audios").subscribe((res) => {
       this.errorInternet = false;
       this.audios = res.json();
+
+      this.nativeStorage.setItem('audios', this.audios);
+
       this.audiosShow = res.json();
 
+      this.checkNotificaciones();
 
       if (this.platform.is('android') || this.platform.is('ios')) {
 
@@ -51,6 +110,7 @@ export class HomePage {
             this.favoritos = favs;
             this.checkFavoritos();
             this.msg.dismissLoading();
+            
             if (refresher) {
               refresher.complete();
             }
@@ -66,14 +126,40 @@ export class HomePage {
       }
 
     }, (err) => {
-
       console.log(err);
 
       this.errorInternet = true;
-      this.msg.dismissLoading();
-      if (refresher) {
-        refresher.complete();
+
+      if (this.platform.is('android') || this.platform.is('ios')) {
+        this.nativeStorage.getItem('audios').then((audios) => {
+          if (audios) {
+            this.audios = audios;
+
+            this.audiosShow = [].concat(audios);
+
+            this.nativeStorage.getItem('favoritos')
+              .then((favs) => {
+
+                this.favoritos = favs;
+                this.checkFavoritos();
+                this.msg.dismissLoading();
+                if (refresher) {
+                  refresher.complete();
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                this.msg.dismissLoading();
+                if (refresher) {
+                  refresher.complete();
+                }
+              });
+
+          }
+        });
+
       }
+
     });
   }
 
@@ -127,9 +213,12 @@ export class HomePage {
         console.log(err);
       });
 
-
     } else {
-      this.favoritos.push(Object.assign({}, a));
+      let obj = Object.assign({}, a);
+
+      obj.played = false;
+
+      this.favoritos.push(obj);
 
       this.api.estadisticas(a.links._fav).then((res) => {
         console.log(res)
@@ -145,7 +234,6 @@ export class HomePage {
       console.log(err);
     });
   }
-
 
   buscarAudios() {
 
@@ -187,6 +275,8 @@ export class HomePage {
       for (let a of this.audiosShow) {
         if (this.idInArray(a.id, this.favoritos)) {
           a.favorito = true;
+        } else {
+          a.favorito = false;
         }
       }
     } else {
