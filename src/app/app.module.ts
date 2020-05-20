@@ -1,57 +1,34 @@
-import { Device } from '@ionic-native/device';
-import { AcercaDePageModule } from './../pages/acerca-de/acerca-de.module';
-import { MsgProvider } from './../providers/msg/msg';
-import { FavoritosPageModule } from './../pages/favoritos/favoritos.module';
-import { NativeStorage } from '@ionic-native/native-storage';
-import { FileTransfer } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { Http, HttpModule } from '@angular/http';
-
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { RouteReuseStrategy } from '@angular/router';
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Api } from '../providers/api/api';
-import { PlayerProvider } from '../providers/player/player';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    ListPage
-  ],
+  declarations: [AppComponent],
+  entryComponents: [],
   imports: [
     BrowserModule,
-    HttpModule,
-    FavoritosPageModule,
-    AcercaDePageModule,
-    IonicModule.forRoot(MyApp),
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    ListPage
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
+    HttpClientModule
   ],
   providers: [
     StatusBar,
-    FileTransfer,
-    NativeStorage,
-    File,
-    SocialSharing,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    Api,
-    MsgProvider,
-    PlayerProvider,
-    Device
-  ]
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,13 @@
+{
+  "appId": "com.atutu.botonera",
+  "appName": "Rolando Apprriba",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

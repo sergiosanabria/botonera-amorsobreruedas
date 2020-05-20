@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Rolando Apprriba</string>
+    <string name="title_activity_main">Rolando Apprriba</string>
+    <string name="package_name">com.atutu.botonera</string>
+    <string name="custom_url_scheme">com.atutu.botonera</string>
+</resources>
